@@ -21,11 +21,13 @@ def extract_indeed_pages():
 
 def extract_indeed_jobs(last_page):
   jobs = []
-  for page in range(last_page):
+  for page in range(last_indeed_page):
     result = requests.get(f"{url}&start={page*limit}")
     soup = bs(result.text,"html.parser")
-    results = soup.find_all("div",{"class":"jobsearch-SerpJobCard"})
+    results = soup.find_all("div",{"class":"job_seen_beacon"})
     for result in results:
-      title = result.find_all("div", {"class":"title"})
-      anchor = title.find("a")["title"]
+      title = result.find("h2", {"class":"jobTitle"}).find("span")
+      if title.has_attr("title") is not True:
+        continue
+      title = title.text
   return jobs
