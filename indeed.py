@@ -22,7 +22,7 @@ def get_last_page():
 def extract_jobs(last_page):
   jobs = []
   for page in range(last_page):
-    print(f"Scrapping page {page}")
+    print(f"Scrapping IND : Page : {page}")
     result =requests.get(f"{url}&start={page*limit}")
     soup = bs(result.text, "html.parser")
     results = soup.find_all("a",{"class":"result"})
